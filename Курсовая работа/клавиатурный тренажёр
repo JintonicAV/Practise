@@ -1,0 +1,68 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    srand(time(NULL)); // Инициализация генератора случайных чисел
+
+    const string words[126] = { "fruit", "home", "pineapple","compare","said","want","air","hand","high","follow","change","light","men","kind","picture",
+        "animal","try","mother","sister","world","brother","father","earth","new","work","made","through","sentence","think","great",
+        "much","low","help","old","about","write","like","go","come","number","people","down","side","may","find","head","country","found","answer","school","grow",
+        "study","still","learn","cover","plant","food","son","sun","eye","keep","never","farm","sea","while","north","myself","every","yourself","friend",
+        "husband","woman","family","face","life","day","hour","","time","water","room","fire","car","table","chair","tea","door","paper","dog","cat","money",
+        "way","end","price","get","leave","stand","know","how","remember","understand","bring","read","always","almost","usually","slowly","sometimes",
+        "quickly","well","again","only","also","very","bad","good","young","small","strong","free","right","hot","cold","happy","stop","between" }; // Список слов для набора
+
+    const int numWords = sizeof(words) / sizeof(*words); // Количество слов в списке
+
+    int score = 0; // Очки игрока
+    char playAgain = 'y'; // Флаг продолжения игры
+
+    while (playAgain == 'y')
+    {
+        cout << "Вам нужно набрать максимальное количество очков - 20, за минимальное количество времени. Нажмите Enter, когда будете готовы начать игру!" << endl;
+        cin.get(); // Ожидание нажатия Enter
+
+         // Очистка консоли
+
+        cout << "Введите следующие слова как можно быстрее:" << endl;
+
+        time_t startTime = time(NULL); // Запись времени начала игры
+
+        for (int i = 0; i < 20; i++)
+        {
+            int randIndex = rand() % numWords; // Получение случайного индекса слова
+
+            string word = words[randIndex]; // Выбор случайного слова из списка
+
+            cout << word << " "; // Вывод слова на экран
+
+            string inputWord;
+            cin >> inputWord; // Считывание введенного слова
+
+            if (inputWord == word) // Проверка правильности ввода
+            {
+                score++; // Увеличение счета за правильный ответ
+            }
+        }
+
+        time_t endTime = time(NULL); // Запись времени окончания игры
+
+        double totalTime = difftime(endTime, startTime); // Вычисление общего времени игры
+
+        cout << endl << "Ваш счет: " << score << endl;
+        cout << "Общее время: " << totalTime << " секунд" << endl;
+
+        cout << "Хотите сыграть еще раз? (y/n): ";
+        cin >> playAgain; // Считывание ответа на вопрос о продолжении игры
+
+        score = 0; // Сброс счета для новой игры
+    }
+
+    return 0;
+}
